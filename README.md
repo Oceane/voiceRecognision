@@ -7,4 +7,4 @@
 
 
 
-If you pull this project, please pull out the directory called FastFourierTransformExemple, this is the program that we have written. Do not leave it in voiceRecognision directory!
+BEFORE YOU RUN ANYTHING! Please pull out the FastFourierTransformExemple directory OUT OF THIS DIRECTORY. Place it wherever you want. THEN open it with Android Studio by creating a new project. 
