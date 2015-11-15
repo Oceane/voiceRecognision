@@ -8,12 +8,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:label="Password Saver"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +24,51 @@
         <activity
             android:name="com.example.enkaichen.fastfourriertransformexemple.SecondRecording"
             android:label="Enter your password"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.example.enkaichen.fastfourriertransformexemple.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.enkaichen.fastfourriertransformexemple.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.enkaichen.fastfourriertransformexemple.MiddleRecording"
+            android:label="Say your password again"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.example.enkaichen.fastfourriertransformexemple.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.enkaichen.fastfourriertransformexemple.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.enkaichen.fastfourriertransformexemple.Middle2Recording"
+            android:label="Say your password again"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.example.enkaichen.fastfourriertransformexemple.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.enkaichen.fastfourriertransformexemple.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.enkaichen.fastfourriertransformexemple.MiddleFinalRecording"
+            android:label="Say your password again"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.example.enkaichen.fastfourriertransformexemple.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.enkaichen.fastfourriertransformexemple.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.enkaichen.fastfourriertransformexemple.MyActivity"
+            android:label="Say your password again"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.example.enkaichen.fastfourriertransformexemple.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.enkaichen.fastfourriertransformexemple.MainActivity" />
+        </activity>
+        <activity
+            android:name=".DisplayContact2"
+            android:label="Say your password again"
             android:screenOrientation="portrait"
             android:parentActivityName="com.example.enkaichen.fastfourriertransformexemple.MainActivity" >
             <meta-data

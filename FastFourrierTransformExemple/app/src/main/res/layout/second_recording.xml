@@ -5,6 +5,7 @@
     android:stretchColumns="1"
     android:scrollbars="vertical"
     android:isScrollContainer="true"
+    android:background="@drawable/background"
     android:scrollbarAlwaysDrawVerticalTrack="true">
 
     <ScrollView
@@ -42,39 +43,63 @@
         android:layout_height="86dp"
         android:layout_weight="0.04">
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Start Recording"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_pressed"
             android:id="@+id/StartRecordingButton2">
         </Button>
-        <Button
+        <!--<Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="90dp"
             android:text="Stop Recording"
             android:id="@+id/StopRecordingButton2"
             android:layout_gravity="right">
-        </Button>
+        </Button>-->
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="86dp"
         android:layout_weight="0.01">
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Start Playback"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_pressed"
             android:id="@+id/StartPlaybackButton2">
         </Button>
 
-        <Button
+        <!--<Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="95dp"
             android:text="Stop Playback"
             android:id="@+id/StopPlaybackButton2"
             android:layout_gravity="right">
-        </Button>
+        </Button>-->
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.06"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" "
+            android:textColor="#FFFFFF"
+            android:id="@+id/textViewWhatHasBeenSaid"
+            android:layout_weight="1.15" />
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
@@ -83,10 +108,12 @@
         android:weightSum="1">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Is the recording ok?"
             android:id="@+id/OKbutton2"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_pressed"
             android:layout_gravity="right" />
     </LinearLayout>
 
@@ -105,29 +132,12 @@
             android:layout_marginLeft="30dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="% of similarity: -"
+            android:textColor="#FFFFFF"
             android:id="@+id/textViewPercentage"
             android:layout_weight="0.66" />
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.06"
-        android:weightSum="1">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text=" "
-            android:id="@+id/textViewWhatHasBeenSaid"
-            android:layout_weight="1.15" />
-
-    </LinearLayout>
 
     </LinearLayout>
   </ScrollView>

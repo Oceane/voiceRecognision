@@ -5,6 +5,7 @@ package com.example.enkaichen.fastfourriertransformexemple;
  */
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -80,7 +81,8 @@ public class SecondRecording extends Activity{
     double[]Array2;
     public static double[] toTransform2;
     public static double[] toTransformMelArrayInitial;
-    public static double[] toTransformMelSecondArray;
+    public static double[] toTransformMelMiddleArrayInitial;
+    public static double[] toTransformMelSecondArray,toTransformMelMiddle2ArrayInitial,toTransformMelMiddleFinalArrayInitial;
     double sma2llest = 0;
     double size2 = 0;
     public static boolean isRecording = false,isPlaying = false;
@@ -105,12 +107,12 @@ public class SecondRecording extends Activity{
 
         startRecordingButton = (Button) this
                 .findViewById(R.id.StartRecordingButton2);
-        stopRecordingButton = (Button) this
-                .findViewById(R.id.StopRecordingButton2);
+        //stopRecordingButton = (Button) this
+         //       .findViewById(R.id.StopRecordingButton2);
         startPlaybackButton = (Button) this
                 .findViewById(R.id.StartPlaybackButton2);
-        stopPlaybackButton = (Button) this
-                .findViewById(R.id.StopPlaybackButton2);
+       // stopPlaybackButton = (Button) this
+        //        .findViewById(R.id.StopPlaybackButton2);
         okButton = (Button)this.findViewById(R.id.OKbutton2);
         okButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -121,28 +123,41 @@ public class SecondRecording extends Activity{
         startRecordingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                record();
+                if(startRecordingButton.getText().toString().equals("Start Recording")) {
+                    startRecordingButton.setText("Stop Recording");
+                    record();
+                }else if(startRecordingButton.getText().toString().equals("Stop Recording")){
+                    startRecordingButton.setText("Start Recording");
+                    stopRecording();
+                }
             }
         });
-        stopRecordingButton.setOnClickListener(new View.OnClickListener() {
+        /*stopRecordingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stopRecording();
                 //compare();
             }
-        });
+        });*/
         startPlaybackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                play();
+
+                if(startPlaybackButton.getText().toString().equals("Start Playback")) {
+                    startPlaybackButton.setText("Stop Playback");
+                    play();
+                }else if(startPlaybackButton.getText().toString().equals("Stop Playback")){
+                    startPlaybackButton.setText("Start Playback");
+                    stopPlaying();
+                }
             }
         });
-        stopPlaybackButton.setOnClickListener(new View.OnClickListener() {
+        /*stopPlaybackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stopPlaying();
             }
-        });
+        });*/
 
         path = new File(
                 Environment.getExternalStorageDirectory().getAbsolutePath()
@@ -189,12 +204,12 @@ public class SecondRecording extends Activity{
 
 
     public void play() {
-        startPlaybackButton.setEnabled(false);
-        startRecordingButton.setEnabled(false);
+        //startPlaybackButton.setEnabled(false);
+        //startRecordingButton.setEnabled(false);
         playTask = new PlayAudio();
         playTask.execute();
 
-        stopPlaybackButton.setEnabled(true);
+        //stopPlaybackButton.setEnabled(true);
         //compare();
 
     }
@@ -202,25 +217,25 @@ public class SecondRecording extends Activity{
     public void stopPlaying() {
         isPlaying = false;
         playTask.cancel(true);
-        stopPlaybackButton.setEnabled(false);
-        startRecordingButton.setEnabled(true);
-        startPlaybackButton.setEnabled(true);
+       // stopPlaybackButton.setEnabled(false);
+       // startRecordingButton.setEnabled(true);
+       // startPlaybackButton.setEnabled(true);
     }
 
     public void record() {
         //percentage = 0;
-        startRecordingButton.setEnabled(false);
-        stopRecordingButton.setEnabled(true);
-        startPlaybackButton.setEnabled(false);
+       // startRecordingButton.setEnabled(false);
+       // stopRecordingButton.setEnabled(true);
+        //startPlaybackButton.setEnabled(false);
         recordTask = new RecordAudio();
         recordTask.execute();
     }
     public void stopRecording() {
         recordTask.cancel(true);
         //compare();
-        startRecordingButton.setEnabled(true);
-        stopRecordingButton.setEnabled(false);
-        startPlaybackButton.setEnabled(true);
+        //startRecordingButton.setEnabled(true);
+        //stopRecordingButton.setEnabled(false);
+        //startPlaybackButton.setEnabled(true);
         isRecording = false;
     }
 
@@ -230,11 +245,36 @@ public class SecondRecording extends Activity{
         double initial = MainActivity.toTransform2[0] - toTransform2[0];
         double r = 0;
         double a = MainActivity.toTransform2[0];
+        double c = MiddleRecording.toTransform2[0];
         double b = toTransform2[0];
+        double d = Middle2Recording.toTransform2[0];
+        double e = MiddleFinalRecording.toTransform2[0];
 
         Array1 = new double[MainActivity.toTransform2.length]; //Normalize the first recording and the second recording by ai/max ai
         Array2 = new double[toTransform2.length];
 
+
+        for (int i = 0; i < Middle2Recording.toTransform2.length; i++) {
+            if (Middle2Recording.toTransform2[i] >= d) {
+                d = Middle2Recording.toTransform2[i];
+            }
+        }
+        for (int i = 0; i < Middle2Recording.toTransform2.length; i++) {
+            if (d != 0) {
+                Middle2Recording.toTransform2[i] = Middle2Recording.toTransform2[i] / d;
+            }
+        }
+
+        for (int i = 0; i < MiddleFinalRecording.toTransform2.length; i++) {
+            if (MiddleFinalRecording.toTransform2[i] >= d) {
+                e = MiddleFinalRecording.toTransform2[i];
+            }
+        }
+        for (int i = 0; i < MiddleFinalRecording.toTransform2.length; i++) {
+            if (e != 0) {
+                MiddleFinalRecording.toTransform2[i] = MiddleFinalRecording.toTransform2[i] / e;
+            }
+        }
 
         for (int i = 0; i < MainActivity.toTransform2.length; i++) {
 
@@ -242,9 +282,19 @@ public class SecondRecording extends Activity{
                 a = MainActivity.toTransform2[i];
             }
         }
+        for (int i = 0; i < MiddleRecording.toTransform2.length; i++) {
+            if (MiddleRecording.toTransform2[i] >= c) {
+                c = MiddleRecording.toTransform2[i];
+            }
+        }
         for (int i = 0; i < MainActivity.toTransform2.length; i++) {
             if (a != 0) {
                 MainActivity.toTransform2[i] = MainActivity.toTransform2[i] / a;
+            }
+        }
+        for (int i = 0; i < MiddleRecording.toTransform2.length; i++) {
+            if (c != 0) {
+                MiddleRecording.toTransform2[i] = MiddleRecording.toTransform2[i] / c;
             }
         }
         for (int i = 0; i < toTransform2.length; i++) {
@@ -259,14 +309,31 @@ public class SecondRecording extends Activity{
             }
         }
         //adding this
+        toTransformMelMiddle2ArrayInitial = MEL(Middle2Recording.toTransform2, MiddleRecording.buffer);
+        toTransformMelMiddleFinalArrayInitial = MEL(MiddleFinalRecording.toTransform2, MiddleRecording.buffer);
+        toTransformMelMiddleArrayInitial = MEL(MiddleRecording.toTransform2, MiddleRecording.buffer);
         toTransformMelArrayInitial = MEL(MainActivity.toTransform2, MainActivity.buffer);
         toTransformMelSecondArray = MEL(toTransform2, buffer);
         //end
+        for (int i = 0; i < toTransformMelArrayInitial.length; i++) {
+            toTransformMelArrayInitial[i] = (toTransformMelArrayInitial[i] + toTransformMelMiddleArrayInitial[i]) / 2;
+        }
+        //added this
+        for (int i = 0; i < toTransformMelMiddleFinalArrayInitial.length; i++) {
+            toTransformMelMiddleFinalArrayInitial[i] = (toTransformMelMiddleFinalArrayInitial[i] + toTransformMelMiddle2ArrayInitial[i]) / 2;
+        }
 
+        for (int i = 0; i < toTransformMelArrayInitial.length; i++) {
+            toTransformMelArrayInitial[i] = (toTransformMelArrayInitial[i] + toTransformMelMiddleFinalArrayInitial[i]) / 2;
+        }
+        //added this
         //changing all the MainActivity.toTransform2 by toTransformMelArrayInitial and toTransform2 by toTransformMelSecondArray
         //starting from here
 
         double MESBLAH = MSE();
+       /* if(MESBLAH < 0.11){
+            MESBLAH = MESBLAH*10;
+        }*/
         // commented this out
         /*if(MESBLAH >= MainActivity.MSE()-0.02 && MESBLAH <= MainActivity.MSE()+0.02){//100){
             MESBLAH = MESBLAH*5;
@@ -330,6 +397,7 @@ public class SecondRecording extends Activity{
             //writeToFile(Double.toString(toTransform[i]));
             //}
         }
+
         sizeDD = getDistance(toTransformMelArrayInitial, toTransformMelSecondArray);
         for (int i = 0; i < sizeDD.length; i++) {
             System.out.println("This is what is sizeDD: " + sizeDD[i]);
@@ -347,7 +415,7 @@ public class SecondRecording extends Activity{
         double dist = (sma2llest / sizeDD.length);//*Math.pow(10.0,9.0);
 
         System.out.println("The distance between the two audio files is: " + dist);
-        double correlation = crossCorrelation(toTransformMelArrayInitial, toTransformMelSecondArray);
+        //double correlation = crossCorrelation(toTransformMelArrayInitial, toTransformMelSecondArray);
         //crossCorrelation( Array1,Array2);
         PearsonsCorrelation pc = new PearsonsCorrelation();
         double corr = pc.correlation(MainActivity.toTransform2, toTransform2);
@@ -367,13 +435,75 @@ public class SecondRecording extends Activity{
         //if(average <= 0.33){
         //    percentTemp = percentTemp-percentTemp;
         //}
-
-        if (average <= 0.45 && dist > 2 * Math.pow(10, -17)) {
-            percentTemp = -OneThird;
-        } else if (average >= 0.6 && dist < 1 * Math.pow(10, -17) && percentTemp <= 80 && percentTemp >= 68) {
-            percentTemp = percentTemp + 20;
+        //initial distance
+        if(size2>0.32){
+            percentTemp = percentTemp-20;
+        }else if(size2<0.14){
+            percentTemp = percentTemp+50;
+        }else if(size2<0.21){
+            percentTemp = percentTemp+20;
         }
-        if (size2 > 0.33) {
+        //distance
+        if(dist>1.3*Math.pow(10, -17)){
+            percentTemp = percentTemp-30;
+        }else if(average >0.40 && dist<1.5*Math.pow(10, -17)){
+            percentTemp = percentTemp+20;
+        }
+        else if(average >0.45 && dist<5*Math.pow(10, -18)){
+            percentTemp = percentTemp+80;
+        }
+        //correlation comparison
+        if(average < 0.35){
+            percentTemp = percentTemp-30;
+        }else if(average > 0.35){
+            percentTemp = percentTemp+10;
+        }
+        else if(average < 0.35 && dist>1.3*Math.pow(10, -17)){
+            percentTemp = percentTemp-20;
+        }else if(average>0.6 ){
+            percentTemp = percentTemp+50;
+        }
+        //final round up
+        if(percentTemp<0){
+            percentTemp = 0;
+        }else if(percentTemp>100){
+            percentTemp = 100;
+        }
+        /*if(average<=0.35){
+            percentTemp = 0;
+        }else if(average == 1){
+            percentTemp = 100;
+        }
+        if(dist > 0.33){
+            percentTemp = percentTemp -20;
+        }
+        if(size2<=0.15){
+            percentTemp = percentTemp +20;
+        }
+        if(average>0.35 && dist < 0.2){
+            percentTemp = percentTemp +10;
+        }
+        if(average <0.4 && dist > 6.5*Math.pow(10, -18)){
+            percentTemp = percentTemp - Onehalf;
+        }
+        if (average <= 0.43 && dist > 1 * Math.pow(10, -17)) {
+            percentTemp = -OneThird;
+        } else if (average >= 0.5 && dist < 1 * Math.pow(10, -17)) {// && percentTemp <= 80 ){//&& percentTemp >= 68) {
+            percentTemp = percentTemp + 20;
+        }else if(average >= 0.53 && size2 < 0.25 ){
+            percentTemp = percentTemp + 20;
+        }else if(average >= 0.59 && dist <=1.2810265668751807*Math.pow(10,-17)){
+            percentTemp = percentTemp + 20;
+        }else if(dist < 4.5 && average >= 0.42){
+            percentTemp = percentTemp + 10;
+        }
+        if(average >=0.59 && dist < 5.5*Math.pow(10, -18) && size2 < 0.19){
+            percentTemp = percentTemp + 50;
+        }
+        if(size2 <=0.152){
+            percentTemp = percentTemp + 50;
+        }*/
+       /* if (size2 > 0.33) {
             percentTemp = percentTemp - Onehalf;
             //add this else if
         }else if(size2 >0.25 && percentTemp<80){
@@ -383,18 +513,26 @@ public class SecondRecording extends Activity{
             percentTemp = percentTemp+20;
         } else if (size2<0.14 && percentTemp > 80){
             percentTemp = 100;
-        }
+        }*/
 
-        if(average <=0.5985 && dist > 1.282*Math.pow(10,-17) && size2>0.32){//change from 0.33 to 0.32
+        /*if(average <=0.43 && dist > 1.282*Math.pow(10,-17) && size2>0.32){//change from 0.33 to 0.32
             percentTemp = percentTemp-percentTemp;
-        }
-        if (percentTemp < 68) {
+        }*/
+        /*if (percentTemp < 68) {
             percentTemp = percentTemp - 20;
         } else if (percentTemp >= 80) {
             percentTemp = 100;
-        }
-        if(percentTemp <0){
+        }*/
+        /*if(percentTemp <0){
             percentTemp = 0;
+        }
+        else if(percentTemp > 100){
+            percentTemp = 100;
+        }*/
+        if(percentTemp > 75){
+            Intent intent = new Intent(this, MyActivity.class);
+            startActivity(intent);
+            finish();
         }
         /*else if(crossCorrelation( toTransform, MainActivity.toTransform)>0.3 && percentTemp<=90){
             percentTemp = percentTemp+10;
@@ -416,11 +554,15 @@ public class SecondRecording extends Activity{
             sum_sq += (err* err);
 
         }*/
-
-        for (int i = 0;  i < toTransformMelArrayInitial.length; ++i)
+        int n = toTransformMelArrayInitial.length;
+        if(n<toTransformMelMiddleArrayInitial.length){
+            n = toTransformMelMiddleFinalArrayInitial.length; //middle array
+        }
+        for (int i = 0;  i < n; ++i)
         {
             double p1 = toTransformMelArrayInitial[i];
-            double err = p1;
+            double p2 = toTransformMelMiddleFinalArrayInitial[i];//middle array
+            double err = p1-p2;
             sum_sq += (err* err);
 
         }
@@ -705,8 +847,8 @@ public class SecondRecording extends Activity{
                     audioTrack.write(audiodata, 0, audiodata.length);
                 }
                 dis.close();
-                startPlaybackButton.setEnabled(false);
-                stopPlaybackButton.setEnabled(true);
+                //startPlaybackButton.setEnabled(false);
+                //stopPlaybackButton.setEnabled(true);
             } catch (Throwable t) {
                 Log.e("AudioTrack", "Playback Failed");
             }
@@ -775,9 +917,9 @@ public class SecondRecording extends Activity{
             // super.onProgressUpdate(values);
         }
         protected void onPostExecute(Void result) {
-            startRecordingButton.setEnabled(true);
-            stopRecordingButton.setEnabled(false);
-            startPlaybackButton.setEnabled(true);
+            //startRecordingButton.setEnabled(true);
+            //stopRecordingButton.setEnabled(false);
+            //startPlaybackButton.setEnabled(true);
         }
     }
     public static class doFFT extends AsyncTask<Void, double[], Void>{

@@ -5,6 +5,7 @@
     android:stretchColumns="1"
     android:scrollbars="vertical"
     android:isScrollContainer="true"
+    android:background="@drawable/background"
     android:scrollbarAlwaysDrawVerticalTrack="true">
 
     <ScrollView
@@ -45,60 +46,44 @@
         android:layout_height="86dp"
         android:layout_weight="0.04">
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Start Recording"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_pressed"
             android:id="@+id/StartRecordingButton">
         </Button>
-        <Button
+        <!--<Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="90dp"
             android:text="Stop Recording"
             android:id="@+id/StopRecordingButton"
             android:layout_gravity="right">
-        </Button>
+        </Button>-->
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="86dp"
         android:layout_weight="0.01">
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Start Playback"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/button_pressed"
             android:id="@+id/StartPlaybackButton">
         </Button>
 
-        <Button
+        <!--<Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="95dp"
             android:text="Stop Playback"
             android:id="@+id/StopPlaybackButton"
             android:layout_gravity="right">
-        </Button>
+        </Button>-->
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="86dp"
-        android:layout_weight="0.06">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send Notification"
-            android:id="@+id/SendNotification">
-        </Button>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="95dp"
-            android:text="Done"
-            android:id="@+id/Donebutton" />
-
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -114,10 +99,33 @@
             android:paddingRight="30dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text=" "
+            android:textColor="#FFFFFF"
             android:id="@+id/textViewWhatHasBeenSaidInitial"
             android:layout_weight="1.15" />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="86dp"
+        android:layout_weight="0.06">
+       <!-- <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send Notification"
+            android:id="@+id/SendNotification">
+        </Button>-->
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_pressed"
+            android:textColor="#FFFFFF"
+            android:text="Done"
+            android:id="@+id/Donebutton" />
+
+    </LinearLayout>
+
+
 
 
     </LinearLayout>

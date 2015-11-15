@@ -1,14 +1,9 @@
 package com.example.enkaichen.fastfourriertransformexemple;
 
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-//import android.app.RemoteInput;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -22,12 +17,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.speech.RecognizerIntent;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.jtransforms.fft.DoubleFFT_1D;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -35,26 +31,19 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.RemoteInput;
-import android.support.v4.app.NotificationManagerCompat;
-import android.widget.Toast;
 
-import org.jtransforms.fft.DoubleFFT_1D;
+/**
+ * Created by Enkaichen on 11/5/15.
+ */
+//MiddleRecording
+public class MiddleRecording extends Activity implements View.OnClickListener {
 //import org.jtransforms.*;
 //import org.jtransforms.fft.DoubleFFT_1D;
-
-
-public class MainActivity extends Activity implements View.OnClickListener {
-
     public static RecordAudio recordTask;
     public static PlayAudio playTask;
     public static Button startRecordingButton, stopRecordingButton, startPlaybackButton,stopPlaybackButton, sendButton, DoneButton;
@@ -87,23 +76,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.middle_recording);
 
-        statusText = (TextView) this.findViewById(R.id.StatusTextView);
+        statusText = (TextView) this.findViewById(R.id.StatusTextView2);
 
-        Sentence = (TextView) this.findViewById(R.id.textViewWhatHasBeenSaidInitial);
+        Sentence = (TextView) this.findViewById(R.id.textViewWhatHasBeenSaidInitial2);
 
         startRecordingButton = (Button) this
-                .findViewById(R.id.StartRecordingButton);
-       // stopRecordingButton = (Button) this
-                //.findViewById(R.id.StopRecordingButton);
+                .findViewById(R.id.StartRecordingButton2);
+        // stopRecordingButton = (Button) this
+        //.findViewById(R.id.StopRecordingButton);
         startPlaybackButton = (Button) this
-                .findViewById(R.id.StartPlaybackButton);
-       // stopPlaybackButton = (Button) this
-              //  .findViewById(R.id.StopPlaybackButton);
-       // sendButton = (Button)this.findViewById(R.id.SendNotification);
+                .findViewById(R.id.StartPlaybackButton2);
+        // stopPlaybackButton = (Button) this
+        //  .findViewById(R.id.StopPlaybackButton);
+        // sendButton = (Button)this.findViewById(R.id.SendNotification);
 
-        DoneButton = (Button)this.findViewById(R.id.Donebutton);
+        DoneButton = (Button)this.findViewById(R.id.Donebutton2);
 
         startRecordingButton.setOnClickListener(this);
         //stopRecordingButton.setOnClickListener(this);
@@ -124,14 +113,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if(path.getUsableSpace() == 0){
             startPlaybackButton.setEnabled(false);
             try {
-                recordingFile = File.createTempFile("recording", ".pcm", path);
+                recordingFile = File.createTempFile("recordingMiddle", ".pcm", path);
             } catch (IOException e) {
                 throw new RuntimeException("Couldn't create file on SD card", e);
             }
         }
         else{
             recordingFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
-                    + "/Android/data/com.apress.proandroidmedia.ch07.altaudiorecorder/files/recording.pcm");//recording.pcm
+                    + "/Android/data/com.apress.proandroidmedia.ch07.altaudiorecorder/files/recordingMiddle.pcm");//recording.pcm
             startPlaybackButton.setEnabled(true);
         }
 
@@ -150,10 +139,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
         int High = 8;
         int R = r.nextInt(High-Low) + Low;
         Final = generateRandomWords(R);
-         for(int i = 0; i < R; i++) {
+        for(int i = 0; i < R; i++) {
             Finalsentence += Final[i] + " ";//Final[0] + " " + Final[1] + " "+ Final[2]+ " "+ Final[3];
         }
-        Sentence.setText(Finalsentence);
+        Sentence.setText(MainActivity.Finalsentence);
 
 
 
@@ -164,7 +153,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         //char[] vowels = {'a','e','i','o','u'};
         //char[] consonants = {'q','w','r','t','p','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m'};
-       //String[] randomwords = {"Peter Piper picked a peck of pickled peppers.", "thimble blumble carmel. Candycorn unicorn corn", "Red lorry, yellow lorry, red lorry, yellow lorry.", "I love to go shopping and drink soda. Robots are my life.", "coding is fun espacially when you are creating great things. Pecked a pickled pepper.", "horses cowboys and cows what goes better together? Well sun and light, roses and love.", "doy dewy loy coy poy. lala la lala la ladi da ladi da.", "She sells sea-shells on the sea-shore. The shells she sells are sea-shells"};
+        //String[] randomwords = {"Peter Piper picked a peck of pickled peppers.", "thimble blumble carmel. Candycorn unicorn corn", "Red lorry, yellow lorry, red lorry, yellow lorry.", "I love to go shopping and drink soda. Robots are my life.", "coding is fun espacially when you are creating great things. Pecked a pickled pepper.", "horses cowboys and cows what goes better together? Well sun and light, roses and love.", "doy dewy loy coy poy. lala la lala la ladi da ladi da.", "She sells sea-shells on the sea-shore. The shells she sells are sea-shells"};
         String[] randomwords = {"telephone pole", "Origamie", "Nuckcracker", "Elephant", "Barber", "Carrots", "Liguering", "Splatoon", "Caramel", "Arowana", "BlackBelly", "Octopus", "BackSter", "Lavender"};
         int previousR = -1;
         String[] randomStrings = new String[numberOfWords];
@@ -294,7 +283,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             stopPlaying();
 
         }else if(b.getText().toString().equals("Done")){
-            Intent intent = new Intent(this, MiddleRecording.class);
+            Intent intent = new Intent(this, Middle2Recording.class);
             startActivity(intent);
             finish();
         }
@@ -545,9 +534,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             // super.onProgressUpdate(values);
         }
         protected void onPostExecute(Void result) {
-           // startRecordingButton.setEnabled(true);
-           // stopRecordingButton.setEnabled(false);
-           // startPlaybackButton.setEnabled(true);
+            // startRecordingButton.setEnabled(true);
+            // stopRecordingButton.setEnabled(false);
+            // startPlaybackButton.setEnabled(true);
         }
     }
 
@@ -564,7 +553,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         @Override
         protected Void doInBackground(Void... params) {
-        //    transformer.ft(toTransform2);
+            //    transformer.ft(toTransform2);
             fftDo.realForwardFull(toTransform2);
             return null;
         }
